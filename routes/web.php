@@ -47,7 +47,9 @@ Route::prefix('admin')->group(function (){
 
     
 });
+    Route::get('/user/show', 'UserController@showAll');
     Route::get('/user','UserController@index');
+    Route::get('/user/detail/{id}', 'UserController@detail');
     Route::resource('/courier','CourierController');
     Route::resource('/product-category','ControllerProductCategory');
     Route::resource('/product','ControllerProduct');

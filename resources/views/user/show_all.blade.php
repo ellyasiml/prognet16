@@ -10,11 +10,10 @@
     <link href="{{asset('template-user/css/style.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,700" rel="stylesheet">
-    <title>TOKO BUKU </title>
+    <title>Toko Buku</title>
 </head>
 
 <body>
-
 
     <!-- HEADER =============================-->
     <header class="item header margin-top-0">
@@ -27,7 +26,7 @@
                             <i class="fa fa-bars"></i>
                             <span class="sr-only">Toggle navigation</span>
                         </button>
-                        <a href="index.html" class="navbar-brand brand"> diBeli </a>
+                        <a href="index.html" class="navbar-brand brand"> SCORILO </a>
                     </div>
                     <div id="navbar-collapse-02" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
@@ -43,12 +42,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <div class="text-homeimage">
-                            <div class="maintext-image" data-scrollreveal="enter top over 1.5s after 0.1s">
-                                diBeli
-                            </div>
-                            <div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.3s">
-                                <h1>TOKO ONLINE BUKU</h1>
+                        <div class="text-pageheader">
+                            <div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                                Produk Buku
                             </div>
                         </div>
                     </div>
@@ -57,54 +53,12 @@
         </div>
     </header>
 
-
-    <!-- STEPS =============================-->
-    <div class="item content">
-        <div class="container toparea">
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="col editContent">
-                        <span class="numberstep"><i class="fa fa-book"></i></span>
-                        <h3 class="numbertext">Jenis Buku yang Lengkap</h3>
-                        <p>
-                            Menarwarkan bebagai jenis buku yang tentunya dapat dibilang cukup lengkap untuk sebuah toko
-                            buku online.
-                        </p>
-                    </div>
-                    <!-- /.col-md-4 -->
-                </div>
-                <!-- /.col-md-4 col -->
-                <div class="col-md-4 editContent">
-                    <div class="col">
-                        <span class="numberstep"><i class="fa fa-gift"></i></span>
-                        <h3 class="numbertext">Banyak Tawaran Menarik</h3>
-                        <p>
-                            Terdapat berbagai banyak tawaran menarik yang tentunya bisa membuat anda senang
-                        </p>
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.col-md-4 col -->
-                <div class="col-md-4 editContent">
-                    <div class="col">
-                        <span class="numberstep"><i class="fa fa-shopping-cart"></i></span>
-                        <h3 class="numbertext">Transaksi yang Mudah</h3>
-                        <p>
-                            Dengan sistem toko online, anda dapat mencari buku yang anda inginkan dan membelinya dengan mudah 
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- LATEST ITEMS =============================-->
+    <!-- CONTENT =============================-->
     <section class="item content">
-        <div class="container">
+        <div class="container toparea">
             <div class="underlined-title">
                 <div class="editContent">
-                    <h1 class="text-center latestitems">Produk Terbaru</h1>
+                    <h1 class="text-center latestitems">Semua Produk</h1>
                 </div>
                 <div class="wow-hr type_short">
                     <span class="wow-hr-h">
@@ -127,15 +81,15 @@
                                 <p>
                                     <a href="#" class="learn-more detailslearn"><i class="fa fa-shopping-cart"></i>
                                         Purchase</a>
-                                    <a href="#" class="learn-more detailslearn"><i class="fa fa-link"></i> Details</a>
+                                    <a href="/user/detail/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-link"></i> Details</a>
                                 </p>
                             </div>
                             @foreach ($product->RelasiProductImage as $gambar)
-                                {{-- Melakukan Kondisi dimana hanya menampilkan 1 gambar saja dari product --}}
-                                @if ($loop->iteration == 1)
-                                <center><span class="maxproduct"><img src="../img/{{$gambar->image_name}}" alt=""
-                                            width="200" height="200"></span></center>
-                                @endif
+                            {{-- Melakukan Kondisi dimana hanya menampilkan 1 gambar saja dari product --}}
+                            @if ($loop->iteration == 1)
+                            <center><span class="maxproduct"><img src="../img/{{$gambar->image_name}}" alt=""
+                                        width="200" height="200"></span></center>
+                            @endif
                             @endforeach
 
                         </div>
@@ -149,36 +103,32 @@
                     </div>
                 </div>
                 @endforeach
-
-                <!-- /.productbox -->
             </div>
         </div>
         </div>
     </section>
 
-
-    <!-- BUTTON =============================-->
-    <div class="item content">
+    <!-- CALL TO ACTION =============================-->
+    <section class="content-block" style="background-color:#00bba7;">
         <div class="container text-center">
-            <a href="shop.html" class="homebrowseitems">Browse All Products
-                <div class="homebrowseitemsicon">
-                    <i class="fa fa-star fa-spin"></i>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="item" data-scrollreveal="enter top over 0.4s after 0.1s">
+                        <h1 class="callactiontitle"> Promote Items Area Give Discount to Buyers <span
+                                class="callactionbutton"><i class="fa fa-gift"></i> WOW24TH</span>
+                        </h1>
+                    </div>
                 </div>
-            </a>
+            </div>
         </div>
-    </div>
-    <br />
-
-
-
-
+    </section>
 
     <!-- FOOTER =============================-->
     <div class="footer text-center">
         <div class="container">
             <div class="row">
                 <p class="footernote">
-                    Connect with diBeli
+                    Connect with Scorilo
                 </p>
                 <ul class="social-iconsfooter">
                     <li><a href="#"><i class="fa fa-phone"></i></a></li>
@@ -195,7 +145,7 @@
         </div>
     </div>
 
-    <!-- SCRIPTS =============================-->
+    <!-- Load JS here for greater good =============================-->
     <script src="{{asset('template-user/js/jquery-.js')}}"></script>
     <script src="{{asset('template-user/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('template-user/js/anim.js')}}"></script>
@@ -213,7 +163,6 @@
         });
 
     </script>
-
 </body>
 
 </html>
