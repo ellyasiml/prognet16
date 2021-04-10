@@ -47,7 +47,7 @@ Route::prefix('admin')->group(function (){
 
     
 });
-
+    Route::get('/user','UserController@index');
     Route::resource('/courier','CourierController');
     Route::resource('/product-category','ControllerProductCategory');
     Route::resource('/product','ControllerProduct');
