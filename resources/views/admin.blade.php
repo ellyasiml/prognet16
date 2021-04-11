@@ -15,7 +15,6 @@
                     @endif
 
                     You are logged in!
-                    <button type="submit" class="btn btn-primary ">Product, Kategori, dan Courier</button>
                 </div>
             </div>
         </div>
