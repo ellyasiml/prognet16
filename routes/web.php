@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home'); #kopituku
+Route::get('/home', 'HomeController@index')->name('home'); #kopituku enak
 Route::get('/user/logout', 'Auth\LoginController@userLogout')->name('user.logout'); #komen lagi
 
 Route::prefix('admin')->group(function (){
