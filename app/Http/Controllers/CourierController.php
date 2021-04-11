@@ -89,7 +89,6 @@ class CourierController extends Controller
         //Mmeperbarui data
         Courier::where('id',$id)->update([
                     'courier'=>$request->courier,
-                    'updated_at'=>Carbon::now()->format('Y-m-d H:i:s')
                 ]);
         return redirect('/courier')->with('berhasil','Data Courier Berhasil dirubah');
     }
