@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 | tes komen hehe
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
