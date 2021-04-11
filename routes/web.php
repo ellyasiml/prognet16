@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 | tes komeennn
+| tes komen hehe
 */
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home'); #kopituku
+Route::get('/home', 'HomeController@index')->name('home'); #kopituku enak gasi
 Route::get('/user/logout', 'Auth\LoginController@userLogout')->name('user.logout'); #komen lagi
 
 Route::prefix('admin')->group(function (){
