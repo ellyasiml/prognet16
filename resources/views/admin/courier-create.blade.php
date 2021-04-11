@@ -28,7 +28,7 @@ active
 
 
             <div class="float-right">
-                <a href="/prognet16/public/admin/courier" class="btn btn-info ">
+                <a href="/courier" class="btn btn-info ">
                     <i class="fas fa-arrow-left"></i>
                     Kembali
                 </a>
