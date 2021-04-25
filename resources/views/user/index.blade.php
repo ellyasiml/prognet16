@@ -76,7 +76,7 @@
                                 {{-- Melakukan Kondisi dimana hanya menampilkan 1 gambar saja dari product --}}
                                 @if ($loop->iteration == 1)
                                 <center><span class="maxproduct"><img src="../img/{{$gambar->image_name}}" alt=""
-                                            width="200" height="300"></span></center>
+                                            width="200" height="250"></span></center>
                                 @endif
                             @endforeach
 
