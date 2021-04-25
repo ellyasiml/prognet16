@@ -21,7 +21,7 @@
 
     /* warna error untuk valdasi */
     input.invalid {
-        background-color: #eb3434;
+        background-color: #ffdddd;
     }
 
     /* menyembunyikan langkah" */
