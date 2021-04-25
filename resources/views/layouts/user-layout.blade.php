@@ -83,7 +83,7 @@
                     Link Project Git Hub
                 </p>
                 <ul class="social-iconsfooter">
-                    <li><a href="https://github.com/Leo-gunadarma/Pratikum-Pemrograman-Internet"><i
+                    <li><a href="https://github.com/ellyasiml/prognet16"><i
                                 class="fa fa-github"></i></a></li>
                 </ul>
                 <p>
