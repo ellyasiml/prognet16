@@ -1,4 +1,4 @@
-@extends('component.sidebar')
+@extends('component.')
 @section('css')
 @endsection
 @section('courier-active')
