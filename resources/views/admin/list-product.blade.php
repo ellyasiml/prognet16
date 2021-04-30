@@ -21,7 +21,7 @@ active
             <p>{{Session::get('error') }}. Silahkan klik <a href="/product-category/create" class="font-weight-bold">link ini</a> untuk membuat data kategori</p>
         </div>
 @endif
-<h1 class="h3 text-dark">List Product Handphone</h1>
+<h1 class="h3 text-dark">List Buku</h1>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="font-weight-bold text-primary">List data</h6>

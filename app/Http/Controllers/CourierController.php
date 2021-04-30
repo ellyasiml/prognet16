@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use App\Courier;
 /* 1905551068*/
 
-
 class CourierController extends Controller
 {
     /**
@@ -16,6 +15,11 @@ class CourierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
         //Menampilkan daftar Courier
