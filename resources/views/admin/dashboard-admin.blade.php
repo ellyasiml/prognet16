@@ -1,4 +1,4 @@
-@extends('template.admin-layout')
+@extends('component.admin-layout')
 @section('dashboard-active')
     active
 @endsection
