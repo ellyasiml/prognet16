@@ -1,4 +1,4 @@
-@extends('component.sidebar')
+@extends('component.admin-layout')
 @section('css')
 @endsection
 @section('product-active')
