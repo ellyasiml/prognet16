@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>diBeli | One-Stop Shopping</title>
+        <title>DiBuku | One-Stop Book Store</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -55,7 +55,8 @@
             .links > a {
                 color: #FF775B;
                 background-color:white;
-                padding: 5px 25px;
+                padding: 5px 15px;
+                margin: 5px;
                 border-radius: 10px;
                 font-size: 13px;
                 font-weight: 600;
@@ -87,7 +88,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    diBeli
+                    diBuku
                 </div>
 
                 <div class="links">
@@ -96,6 +97,10 @@
                             <a href="{{ url('/home') }}">Home</a>
                         @else
                             <a href="{{ route('login') }}">Login</a>
+
+                            <div class="top-right links">
+                                <a href="{{ route('admin.login') }}">Admin</a>
+                            </div>
 
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}">Register</a>
