@@ -1,11 +1,11 @@
-@extends('component.sidebar')
+@extends('component.admin-layout')
 @section('css')
 @endsection
 @section('courier-active')
 active
 @endsection
 @section('content')
-<h1 class="h3 text-dark">Create New Data</h1>
+<h1 class="h3 text-dark">Edit Data</h1>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="font-weight-bold text-primary">Form</h6>

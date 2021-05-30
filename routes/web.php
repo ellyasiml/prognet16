@@ -56,10 +56,36 @@ Route::prefix('admin')->group(function (){
     Route::get('/user/detail/{id}', 'UserController@detail');
     Route::get('user/logout', 'UserController@logout');
     Route::get('/user/transaksi-langsung/{id}','UserController@transaksiLangsung');
+   
     
+    Route::middleware('auth:admin')->group(function(){
     //CRUD COURIER
     Route::resource('/courier','CourierController');
     //CRUD KATEGORI PRODUK
     Route::resource('/product-category','ControllerProductCategory');
     //CRUD PRODUK
     Route::resource('/product','ControllerProduct');
+
+    //--Route Untuk Soft Delete pada Admin Product--//
+    //route get all data trash product
+    Route::get('/product-trash','ControllerProduct@trash');
+    //route restore product
+    Route::get('/product-restore/{id}', 'ControllerProduct@restore');
+    Route::get('/product-restore-all', 'ControllerProduct@restore_all');
+    //route hapus permanen
+    Route::get('/product-hapus_permanen/{id}', 'ControllerProduct@hapus');
+    Route::get('/product-hapus_permanen', 'ControllerProduct@hapus_semua');
+  //-- End Route Untuk Soft Delete pada Admin Product --//
+
+  //--Route untuk diskon--//
+
+    Route::get('/discount/{id}','ControllerDiscount@discount');
+    Route::post('/discount-store','ControllerDiscount@store');
+    Route::put('/discount-update/{id}','ControllerDiscount@update');
+    Route::get('/discount-delete/{id}','ControllerDiscount@delete');
+    
+  //--End route untuk diskon--//
+
+  Route::get('/gambar/{id}','ControllerProduct@editGambar');
+  Route::match(['put', 'patch'],'/gambar/{id}/update', 'ControllerProduct@updateGambar');
+  });

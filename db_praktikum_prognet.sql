@@ -276,6 +276,7 @@ CREATE TABLE `products` (
   `product_rate` double DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   `stock` int(10) DEFAULT NULL,
   `weight` int(3) DEFAULT NULL,
   PRIMARY KEY (`id`)

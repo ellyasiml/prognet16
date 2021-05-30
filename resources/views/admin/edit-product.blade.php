@@ -1,4 +1,4 @@
-@extends('component.sidebar')
+@extends('component.admin-layout')
 @section('css')
 @endsection
 @section('product-active')
@@ -11,7 +11,8 @@ active
         <h6 class="font-weight-bold text-primary">Ubah Data</h6>
     </div>
     <div class="card-body">
-        <form action="/product/{{$product->id}}" method="POST" enctype="multipart/form-data" name="data_product" id="data_product">
+        <form action="/product/{{$product->id}}" method="POST" enctype="multipart/form-data" name="data_product"
+            id="data_product">
             @csrf
             {{ method_field('PUT') }}
             <div class="form-group row">
@@ -46,10 +47,10 @@ active
                     <h6 class="font-weight-bold text-primary">Diskripsi Product</h6>
                 </label>
                 <div class="col-sm-10">
-                    <textarea name="deskripsi_product" id="deskripsi_product" rows="3" placeholder="Deskripsi dari Product"
-                        class="form-control" >{{$product->description}}</textarea>
+                    <textarea name="deskripsi_product" id="deskripsi_product" rows="3"
+                        placeholder="Deskripsi dari Product" class="form-control">{{$product->description}}</textarea>
                     <span class="error text-danger">
-                        <h6  id="deskripsi_product_error"></h6>
+                        <h6 id="deskripsi_product_error"></h6>
                     </span>
                 </div>
             </div>
@@ -61,7 +62,7 @@ active
                 </label>
                 <div class="col-sm-10">
                     <input name="stock_product" id="stock_product" type="number" class="form-control"
-                        placeholder="Masukan jumlah stock product (Dalam bentuk angka)"value="{{$product->stock}}">
+                        placeholder="Masukan jumlah stock product (Dalam bentuk angka)" value="{{$product->stock}}">
                     <span class="error text-danger">
                         <h6 id="stock_product_error"></h6>
                     </span>
@@ -75,28 +76,37 @@ active
                 </label>
                 <div class="col-sm-10">
                     <input name="berat_product" id="berat_product" type="number" class="form-control"
-                        placeholder="Masukan jumlah stock product (Dalam bentuk angka)"value="{{$product->weight}}">
+                        placeholder="Masukan jumlah stock product (Dalam bentuk angka)" value="{{$product->weight}}">
                     <span class="error text-danger">
                         <h6 id="berat_product_error"></h6>
                     </span>
                 </div>
             </div>
 
-
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">
-                    <h6 class="font-weight-bold text-primary">Gambar Product</h6>
+                    <h6 class="font-weight-bold text-primary">Kategori </h6>
                 </label>
                 <div class="col-sm-10">
-                    <input name="gambar_product" id="gambar_product" type="file" class="" <span class="error text-danger">
-                    <p id="error_gambar_product"></p>
-                    </span>
+                    <div class="row">
+                        @foreach($productCategorys as $kategori)
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input name="kategori[]" class="form-check-input" type="checkbox" id="gridCheck1"
+                                    value="{{ $kategori->id }}" @if(in_array($kategori->id,
+                                $productCategoryDetail))CHECKED @endif>
+                                <label class="form-check-label" for="gridCheck1">
+                                    {{ $kategori->category_name}}
+                                </label>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
-
             <div class="float-right">
-                <a href="/product" class="btn btn-info ">
+                <a href="/product/{{$product->id}}" class="btn btn-info ">
                     <i class="fas fa-arrow-left"></i>
                     Kembali
                 </a>
@@ -164,7 +174,7 @@ active
         } else {
             document.getElementById("berat_product_error").innerHTML = ""
         }
-        if(!allowedExtensions.exec(errorGR)){
+        if (!allowedExtensions.exec(errorGR)) {
             msg_error = "*Silahkan masukan gambar jpeg/.jpg/.png *";
             document.getElementById("error_gambar_product").innerHTML = msg_error;
             submit = false;

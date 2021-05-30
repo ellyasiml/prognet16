@@ -1,4 +1,4 @@
-@extends('component.sidebar')
+@extends('component.admin-layout')
 @section('css')
 @endsection
 @section('product-active')
@@ -45,10 +45,10 @@ active
                     <h6 class="font-weight-bold text-primary">Diskripsi Product</h6>
                 </label>
                 <div class="col-sm-10">
-                    <textarea name="deskripsi_product" id="deskripsi_product" rows="3" placeholder="Deskripsi dari Product"
-                        class="form-control"></textarea>
+                    <textarea name="deskripsi_product" id="deskripsi_product" rows="3"
+                        placeholder="Deskripsi dari Product" class="form-control"></textarea>
                     <span class="error text-danger">
-                        <h6  id="deskripsi_product_error"></h6>
+                        <h6 id="deskripsi_product_error"></h6>
                     </span>
                 </div>
             </div>
@@ -67,18 +67,29 @@ active
                 </div>
             </div>
 
-            
+
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">
                     <h6 class="font-weight-bold text-primary">Kategori Produk</h6>
                 </label>
                 <div class="col-sm-10">
-                    <select name="kategori_product" class="form-control" id="kategori_product">
-                        <option selected disabled hidden value="0">Pilih Kategori</option>
-                            @foreach($productCategorys as $productCategory)
-                            <option value="{{ $productCategory->id }}">{{ $productCategory->category_name }}</option>
-                             @endforeach
-                    </select>
+
+                    <div class="row">
+                    @foreach($productCategorys as $productCategory)
+
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input name="kategori[]" class="form-check-input" type="checkbox" id="ketogori{{$loop->iteration}}"
+                                    value="{{ $productCategory->id }}">
+                                <label class="form-check-label" for="gridCheck1">
+                                    {{ $productCategory->category_name }}
+                                </label>
+                            </div>
+                        </div>
+
+                    @endforeach
+                    
+                    </div>
                     <span class="error text-danger">
                         <h6 id="kategori_product_error"></h6>
                     </span>
@@ -105,9 +116,13 @@ active
                     <h6 class="font-weight-bold text-primary">Gambar Product</h6>
                 </label>
                 <div class="col-sm-10">
-                    <input name="gambar_product" id="gambar_product" type="file" class="" <span class="error text-danger">
-                    <p id="error_gambar_product"></p>
+                    <input name="gambar_product[]" id="gambar_product" type="file" class="" multiple accept="image/x-png,image/jpeg" <span
+                        class="error text-danger" >
+                    <h6 id="error_gambar_product"></h6> </span>
+                    <span class="error text-danger">
+                        <h6 id="error_gambar_product_max"></h6>
                     </span>
+
                 </div>
             </div>
 
@@ -131,18 +146,49 @@ active
 @section('javascript')
 <script>
     document.getElementById("data_product").onsubmit = function () {
+
         var errorNB = document.forms["data_product"]["nama_barang"].value;
         var errorHP = document.forms["data_product"]["harga_product"].value;
         var errorDP = document.forms["data_product"]["deskripsi_product"].value;
         var errorSP = document.forms["data_product"]["stock_product"].value;
-        var errorKP = document.forms["data_product"]["kategori_product"].value;
         var errorBP = document.forms["data_product"]["berat_product"].value;
         var errorGR = document.forms["data_product"]["gambar_product"].value;
         var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-
-
+        var maxFile = $("input[type='file']");
+        // Menampung id array
+        var arrayCheckBox = [
+            @foreach ($productCategorys as $productCategory)
+               [("ketogori{{$loop->iteration}}")],
+            @endforeach
+        ];
         var submit = true;
-
+        if (parseInt(maxFile.get(0).files.length) > 3) {
+            msg_error = "*Gambar hanya boleh 3*";
+            document.getElementById("error_gambar_product_max").innerHTML = msg_error;
+            submit = false;
+        }
+        // Mengecek ID apakah checkbok tersebut di cek apakah tidak (perulangan)
+        var errorKI;
+        for (var i=0; i<arrayCheckBox.length; i++){
+            var check= document.getElementById(arrayCheckBox[i]); 
+            if(check.checked == true){
+                submit = true; 
+                errorKI= true;
+                break;
+            }
+            else{
+                submit = false;
+                errorKI= false;
+            }
+        }
+        //Pesan kesalahan
+        if (errorKI == false) {
+            msg_error = "*Silahkan pilih salah satu katagori*";
+            document.getElementById("kategori_product_error").innerHTML = msg_error;
+            submit = false;
+        } else {
+            document.getElementById("kategori_product_error").innerHTML = ""
+        }
         if (errorNB == null || errorNB == "") {
             msg_error = "*Silahkan masukan nama barang*";
             document.getElementById("nama_barang_error").innerHTML = msg_error;
@@ -167,13 +213,6 @@ active
             document.getElementById("deskripsi_product_error").innerHTML = ""
         }
 
-        if (errorKP == 0) {
-            msg_error = "*Silahkan pilih kategori product*";
-            document.getElementById("kategori_product_error").innerHTML = msg_error;
-            submit = false;
-        } else {
-            document.getElementById("kategori_product_error").innerHTML = ""
-        }
 
         if (errorSP == null || errorSP == "") {
             msg_error = "*Silahkan masukan jumlah stok produk*";
@@ -191,7 +230,7 @@ active
         } else {
             document.getElementById("berat_product_error").innerHTML = ""
         }
-        if(!allowedExtensions.exec(errorGR)){
+        if (!allowedExtensions.exec(errorGR)) {
             msg_error = "*Silahkan masukan gambar jpeg/.jpg/.png *";
             document.getElementById("error_gambar_product").innerHTML = msg_error;
             submit = false;

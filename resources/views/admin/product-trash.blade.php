@@ -5,7 +5,10 @@
 @section('product-active')
 active
 @endsection
+
+
 @section('content')
+
 @if(Session::has('berhasil'))
 <script>
     Swal.fire(
@@ -38,10 +41,12 @@ active
 
 </script>
 @endif
-<h1 class="h3 text-dark">List Buku</h1>
+
+
+<h1 class="h3 text-dark">Product Terhapus</h1>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="font-weight-bold text-primary">List data</h6>
+        <h6 class="font-weight-bold text-primary">List Data Yang Terhapus Sementara</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -51,66 +56,64 @@ active
                         <th>No</th>
                         <th>Nama Product</th>
                         <th>Rate</th>
+                        <th>Deleted At</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($products as $product)
+                    @foreach ($product as $prd)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$product->product_name}}</td>
+                        <td>{{$prd->product_name}}</td>
                         <td>Ini Rate</td>
+                        <td>{{ $prd->deleted_at }}</td>
                         <td class="text-center">
-                            <form action="/product/{{$product->id}}" method="POST">
-                                @csrf
-                                {{ method_field('DELETE') }}
-                                {{-- TOMBOL TAMPILKAN GAMBAR --}}
-                                {{-- TOMBOL DETAIL --}}
-                                <a href="/product/{{$product->id}}" class="btn btn-success">
-                                    <i class="fas fa-eye"></i> Detail
+
+                            {{-- TOMBOL Restore --}}
+                                <a href="{{ url('/product-restore/'.$prd->id) }}" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Restore
                                 </a>
 
-                                {{-- TOMBOL DISKON --}}
-                                <a href="/discount/{{$product->id}}" class="btn btn-warning">
-                                    <i class="fas fa-price"></i> Diskon
-                                </a>
-
-                                {{-- TOMBOL DELETE --}}
-                                <button type="submit" name="submit"
+                            {{-- TOMBOL DELETE --}}
+                                <a href="{{ url('/product-hapus_permanen/'.$prd->id) }}" type="submit" name="submit"
                                     onclick="return confirm('Anda yakin ingin menghapus data ini?')"
                                     class="btn btn-danger">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </form>
+                                    <i class="fas fa-trash"></i> Delete Permanen
+                                </a>
+
+                                
+
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8">There is no data</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
 
         </div>
-        <a href="{{ url('/product/create') }}" class="btn btn-primary btn-icon-split">
+
+        <div style="padding-left: 1326px;">
+            <a href="{{ url('/product-restore-all') }}" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus-square"></i>
             </span>
-            <span class="text">Tambah Data</span>
+            <span class="text">Restore All</span>
         </a>
-        <a href="{{ url('/product-trash') }}" class="btn btn-danger btn-icon-split">
+        <a href="{{ url('/product-hapus_permanen') }}" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-trash"></i>
             </span>
-            <span class="text">DataTrash</span>
+            <span class="text">Delete All</span>
         </a>
+        </div>
+        
+
     </div>
 
 </div>
 
-
 @endsection
+
+
 @section('javascript')
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
