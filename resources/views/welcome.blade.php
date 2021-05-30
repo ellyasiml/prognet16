@@ -11,7 +11,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-        <!-- Styles -->
+        <!-- Styles tes dulu -->
         <style>
             html, body {
                 background-color: #B0D9D1;
