@@ -95,12 +95,13 @@ CREATE TABLE `couriers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `couriers` */
 
 insert  into `couriers`(`id`,`courier`,`created_at`,`updated_at`) values (2,'Fedex',NULL,'2021-03-28 12:21:56');
-insert  into `couriers`(`id`,`courier`,`created_at`,`updated_at`) values (3,'Joni','2021-03-28 04:31:10','2021-03-28 04:31:10');
+insert  into `couriers`(`id`,`courier`,`created_at`,`updated_at`) values (3,'SiCepat','2021-03-28 04:31:10','2021-05-30 07:43:20');
+insert  into `couriers`(`id`,`courier`,`created_at`,`updated_at`) values (5,'JNE','2021-05-29 12:38:21','2021-05-29 12:38:21');
 
 /*Table structure for table `discounts` */
 
@@ -110,6 +111,7 @@ CREATE TABLE `discounts` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_product` int(10) unsigned DEFAULT NULL,
   `percentage` int(3) DEFAULT NULL,
+  `discount_price` int(11) DEFAULT NULL,
   `start` date DEFAULT NULL,
   `end` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -117,9 +119,12 @@ CREATE TABLE `discounts` (
   PRIMARY KEY (`id`),
   KEY `id_product` (`id_product`),
   CONSTRAINT `discounts_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `discounts` */
+
+insert  into `discounts`(`id`,`id_product`,`percentage`,`discount_price`,`start`,`end`,`created_at`,`updated_at`) values (13,1,3,23280,'2021-05-29','2021-06-05','2021-05-29 13:36:49','2021-05-29 13:36:49');
+insert  into `discounts`(`id`,`id_product`,`percentage`,`discount_price`,`start`,`end`,`created_at`,`updated_at`) values (14,4,10,NULL,'2021-05-30','2021-06-06','2021-05-30 15:46:36','2021-05-30 15:48:04');
 
 /*Table structure for table `failed_jobs` */
 
@@ -194,13 +199,15 @@ CREATE TABLE `product_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `product_categories` */
 
 insert  into `product_categories`(`id`,`category_name`,`created_at`,`updated_at`) values (1,'Buku Pelajaran SD','2021-03-17 10:22:45','2021-04-03 03:16:14');
 insert  into `product_categories`(`id`,`category_name`,`created_at`,`updated_at`) values (2,'Buku Pelajaran SMP','2021-03-28 05:03:39','2021-04-03 03:16:28');
 insert  into `product_categories`(`id`,`category_name`,`created_at`,`updated_at`) values (3,'Buku Pelajaran SMA','2021-04-03 03:16:39','2021-04-03 03:16:39');
+insert  into `product_categories`(`id`,`category_name`,`created_at`,`updated_at`) values (4,'Komik','2021-05-29 12:44:31','2021-05-29 12:44:31');
+insert  into `product_categories`(`id`,`category_name`,`created_at`,`updated_at`) values (5,'Novel','2021-05-30 13:40:09','2021-05-30 13:40:09');
 
 /*Table structure for table `product_category_details` */
 
@@ -217,11 +224,13 @@ CREATE TABLE `product_category_details` (
   KEY `category_id` (`category_id`),
   CONSTRAINT `product_category_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `product_category_details_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `product_categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `product_category_details` */
 
 insert  into `product_category_details`(`id`,`product_id`,`category_id`,`created_at`,`updated_at`) values (1,1,1,'2021-03-28 05:28:42','2021-03-28 05:28:42');
+insert  into `product_category_details`(`id`,`product_id`,`category_id`,`created_at`,`updated_at`) values (2,4,4,'2021-05-29 13:06:03','2021-05-29 13:06:03');
+insert  into `product_category_details`(`id`,`product_id`,`category_id`,`created_at`,`updated_at`) values (3,5,4,'2021-05-29 13:42:34','2021-05-29 13:42:34');
 
 /*Table structure for table `product_images` */
 
@@ -236,11 +245,13 @@ CREATE TABLE `product_images` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `product_images` */
 
-insert  into `product_images`(`id`,`product_id`,`image_name`,`created_at`,`updated_at`) values (1,1,'aplikasi-mobile.jpg','2021-03-28 05:28:42','2021-03-28 05:28:42');
+insert  into `product_images`(`id`,`product_id`,`image_name`,`created_at`,`updated_at`) values (1,1,'download.jpg','2021-03-28 05:28:42','2021-05-30 15:21:39');
+insert  into `product_images`(`id`,`product_id`,`image_name`,`created_at`,`updated_at`) values (2,4,'thumb-1920-648557.jpg','2021-05-29 13:06:03','2021-05-29 13:06:03');
+insert  into `product_images`(`id`,`product_id`,`image_name`,`created_at`,`updated_at`) values (3,5,'wp6045748.jpg','2021-05-29 13:42:34','2021-05-29 13:42:34');
 
 /*Table structure for table `product_reviews` */
 
@@ -276,15 +287,17 @@ CREATE TABLE `products` (
   `product_rate` double DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
   `stock` int(10) DEFAULT NULL,
   `weight` int(3) DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (1,'Tematik Tema 1',24000,'Buku Tematik untuk kelas 1 SD',NULL,'2021-03-28 05:28:42','2021-04-03 03:15:48',5,380);
+insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`,`deleted_at`) values (1,'Tematik Tema 1',24000,'Buku Tematik untuk kelas 1 SD',NULL,'2021-03-28 05:28:42','2021-04-03 03:15:48',5,380,NULL);
+insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`,`deleted_at`) values (4,'One Piece Vol.2',40000,'buku komik one piece volume 2',NULL,'2021-05-29 13:06:02','2021-05-29 13:06:02',5,120,NULL);
+insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`,`deleted_at`) values (5,'One Piece Vol.1',40000,'Buku komik One piece Volume 1',NULL,'2021-05-29 13:42:34','2021-05-29 13:42:34',5,120,NULL);
 
 /*Table structure for table `response` */
 
@@ -405,7 +418,7 @@ insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verifie
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (5,'tenten','tenten@gmail.com',NULL,NULL,NULL,'$2y$10$YNk3ZwNzbbDR1ZN8Ak9Cw.rcTO.RltgLk7C0fi8o6YvXzwD2NbfmK',NULL,'2021-02-27 15:22:28','2021-02-27 15:22:28');
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (6,'user','user@gmail.com',NULL,NULL,NULL,'$2y$10$go3sHrB8IYVK/zyDbe/A.excWRNtdMkqmHY1pgBAnJQ3JB70xYKHO',NULL,'2021-02-27 15:44:51','2021-02-27 15:44:51');
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (8,'eye','eyebrowpixel@gmail.com',NULL,NULL,'2021-02-28 00:59:52','$2y$10$Q3hLIQUBzJfuFxCuRYB/tOZ.BaQ3E05RrI1wsnZb7QkM.2hlVfTD2',NULL,'2021-02-28 00:57:43','2021-02-28 00:59:52');
-insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (9,'kevin','kevin@gmail.com',NULL,NULL,'2021-02-28 05:46:47','$2y$10$jp0DY1H6Ig1YJMC8dlLq3uSGViu4TqEeQkZE1GSwak2JKD7ntPR7i','09y0hSv2wIcbrN5lYpZM4g84sxH4sOdAAqMaYFHFjTnbQ4xbzLUWYMxOTp9r','2021-02-28 05:46:19','2021-02-28 05:47:31');
+insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (9,'kevin','kevin@gmail.com',NULL,NULL,'2021-02-28 05:46:47','$2y$10$jp0DY1H6Ig1YJMC8dlLq3uSGViu4TqEeQkZE1GSwak2JKD7ntPR7i','iS4E6BhvlTKloL35xTR7JnafQ6PkrkFSP37ZAtRllXpgfyuCLeWBWnrg4Lbi','2021-02-28 05:46:19','2021-02-28 05:47:31');
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (10,'Ana','gg@gmail.com',NULL,NULL,NULL,'$2y$10$QaZqNJ8bNH3hlNVucKu.vu0zjdi6p/7c20E428aT5JuXCsSKMgCRC','V2dqFZ4XreTtOhhwIuT6mDpoueyT30cB2e7D3OHbZqnEaLNKKDhwlejdETOX','2021-03-08 15:29:39','2021-03-08 15:29:39');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
