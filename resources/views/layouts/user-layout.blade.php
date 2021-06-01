@@ -28,14 +28,13 @@
                             <i class="fa fa-bars"></i>
                             <span class="sr-only">Toggle navigation</span>
                         </button>
-                        <a href="index.html" class="navbar-brand brand"> diBuku </a>
+                        <a href="/user" class="navbar-brand brand"> diBuku </a>
                     </div>
                     <div id="navbar-collapse-02" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="propClone"><a href="index.html">Home</a></li>
-                            <li class="propClone"><a href="shop.html">Shop</a></li>
-                            <li class="propClone"><a href="product.html">Product</a></li>
-                            <li class="propClone"><a href="checkout.html">Checkout</a></li>
+                            <li class="propClone"><a href="/user">Home</a></li>
+                            <li class="propClone"><a href="/user/show">Product</a></li>
+                            <li class="propClone"><a href="/user/detail/{id}">Checkout</a></li>
                             <li class="propClone"><a href="contact.html">Contact</a></li>
                             <li class="propClone">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
