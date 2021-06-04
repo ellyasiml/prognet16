@@ -41,6 +41,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8">
+                    <p class="text-primary font-weight-bold h2 ">Reviews</p>
+                    @if(sizeof($product->review)>0)
+                    @foreach($product->review as $review)
+                    <hr>
+                    <p>Rating : {{$review->rate}}</p>
+                    <p>Ulasan : {{$review->content}}</p>
+                    @foreach($review->response as $respon)
+                    <p>Balasan : {{$respon->content}}</p>
+                    <hr>
+                    @endforeach
+                    @endforeach
+                    @else
+                    <p>Belum ada review</p>
+                    @endif
+                </div>
             </div>
         </div>
         </div>

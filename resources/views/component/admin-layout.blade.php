@@ -75,11 +75,50 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item @yield('product-active')">
+                <a class="nav-link collapsed "data-toggle="collapse" data-target="#koleps"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-book"></i>
+                    <span>Transaction</span>
+                </a>
+                <div id="koleps" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Navigasi Fitur Product:</h6>
+                        <a class="collapse-item" href="/transaction/unverified">Unverified</a>
+                        <a class="collapse-item" href="/transaction/verified">Verified</a>
+                        <a class="collapse-item" href="/transaction/delivered">Delivered</a>
+                        <a class="collapse-item" href="/transaction/success">Success</a>
+                        <a class="collapse-item" href="/transaction/expired">Expired</a>
+                        <a class="collapse-item" href="/transaction/canceled">Canceled</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item @yield('product-active')">
+                <a class="nav-link collapsed "data-toggle="collapse" data-target="#laporan"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-book"></i>
+                    <span>Laporan</span>
+                </a>
+                <div id="laporan" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Navigasi Fitur Product:</h6>
+                        <a class="collapse-item" href="/laporan/perbulan">Laporan Perbulan</a>
+                        <a class="collapse-item" href="/laporan/pertahun">Laporan Pertahun</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Courier -->
             <li class="nav-item @yield('courier-active')">
                 <a class="nav-link" href="/courier">
                     <i class="fas fa-shipping-fast"></i>
                     <span>Courier</span></a>
+            </li>
+            <li class="nav-item @yield('courier-active')">
+                <a class="nav-link" href="/review">
+                    <i class="fas fa-list"></i>
+                    <span>Product Review</span></a>
             </li>
 
             <!-- Divider -->

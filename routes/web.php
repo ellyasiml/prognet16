@@ -24,6 +24,12 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => true]);
+Route::get('/get/provinsi', 'UserController@province');
+Route::get('/get/city/{id}', 'UserController@city');
+Route::get('/get/ongkir/{a}/{b}/{c}/{d}', 'UserController@getongkir');
+Route::get('/get/berat/{id}', 'UserController@getberat');
+Route::get('/print/bulanan', 'AdminController@printbulanan');
+Route::get('/print/tahunan', 'AdminController@printtahunan');
 
 Route::get('/home', 'HomeController@index')->name('home'); #kopituku enak gasi ga si
 Route::get('/user/logout', 'Auth\LoginController@userLogout')->name('user.logout'); #komen lagi
@@ -54,8 +60,32 @@ Route::prefix('admin')->group(function (){
     Route::get('/user/show', 'UserController@showAll');
     Route::get('/user','UserController@index');
     Route::get('/user/detail/{id}', 'UserController@detail');
+    Route::get('/user/transaksi/{id}', 'UserController@mytransaction');
     Route::get('user/logout', 'UserController@logout');
     Route::get('/user/transaksi-langsung/{id}','UserController@transaksiLangsung');
+    Route::post('/buy/now', 'UserController@buynow')->name('post.buynow');
+    Route::get('/add/cart/{id}', 'UserController@addcart');
+    Route::get('/user/cart/{id}', 'UserController@listcart');
+    Route::post('/ubah/jumlah', 'UserController@ubahjumlah')->name('ubahjumlah');
+    Route::get('/hapus/cart', 'UserController@hapuscart')->name('hapuscart');
+
+    Route::get('/data/trans/{status}/{id}', 'UserController@datatrans');
+    Route::post('/upload/bukti', 'UserController@uploadbukti')->name('upload.bukti');
+    Route::post('/post/checkout', 'UserController@checkout')->name('post.checkout');
+    Route::get('/data/detail/{id}', 'UserController@getdetail');
+    Route::get('/terima/barang/{id}', 'UserController@terimabarang');
+    Route::get('/cancel/transaksi/{id}', 'UserController@canceltrans');
+
+    Route::get('/transaction/{param}', 'AdminController@listtrans');
+    Route::get('/ubah/status/{param}/{id}', 'AdminController@ubahstatus');
+    Route::post('/beri/rating', 'UserController@berirating')->name('beri.rating');
+
+    Route::get('/review', 'AdminController@listreview');
+
+    Route::post('/post/response', 'AdminController@beritanggapan');
+
+    Route::get('/laporan/perbulan', 'AdminController@laporanperbulan');
+    Route::get('/laporan/pertahun', 'AdminController@laporanpertahun');
    
     
     Route::middleware('auth:admin')->group(function(){
@@ -83,6 +113,7 @@ Route::prefix('admin')->group(function (){
     Route::post('/discount-store','ControllerDiscount@store');
     Route::put('/discount-update/{id}','ControllerDiscount@update');
     Route::get('/discount-delete/{id}','ControllerDiscount@delete');
+
     
   //--End route untuk diskon--//
 

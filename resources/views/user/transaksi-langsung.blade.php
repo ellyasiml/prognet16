@@ -67,9 +67,26 @@
                 </span>
             </div>
         </div>
-
-        <form name="regForm" id="regForm" action="">
-
+        @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        <form name="regForm" id="regForm" action="{{ route('post.buynow') }}" method="post">
+            @csrf
+            <input type="hidden" name="id_produk" value="{{$product->id}}">
+            <input type="hidden" id="berat" value="{{$product->weight}}">
+            <input type="hidden" name="regency" id="regency">
+            <input type="hidden" name="province" id="province">
             <div class="row">
                 <div class="col-12 col-md-4 col-lg-4">
                     <div class="card shadow mb-4">
@@ -101,8 +118,10 @@
                 <strong>
                     <h4>Jumlah Yang ingin dibeli:</h4>
                 </strong>
-                <p><input type="number" min="1" max="{{$product->stock}}" oninput="this.className = ''"
-                        name="jumlah_total" id="jumlah_total" onkeydown="return false" value="1"></p>
+                <p>
+                    <input type="number" min="1" max="{{$product->stock}}" oninput="this.className = ''"
+                    name="jumlah_total" id="jumlah_total" onkeydown="return false" value="1">
+                </p>
                 <span class="text-danger">
                     <h6 id="error_jumlah_total"></h6>
                 </span>
@@ -116,53 +135,105 @@
 
 
                 <h6>Nama:</h6>
-                <p><input type="text" placeholder="Masukan nama anda" name="nama_penerima" id="nama_penerima"
-                        oninput="this.className = ''" value="{{Auth::user()->name}}" ></p>
+                <p>
+                    <input type="text" placeholder="Masukan nama anda" name="nama_penerima" id="nama_penerima"
+                    oninput="this.className = ''" value="{{Auth::user()->name}}" >
+                </p>
                 <span class="text-danger">
                     <h6 class="error_nama_pengguna"></h6>
                 </span>
 
                 <h6>Email:</h6>
-                <p><input type="email" placeholder="Masukan email anda" name="email_pengguna"
-                        id="email_pengguna" oninput="this.className = ''" value="{{Auth::user()->email}}"></p>
+                <p>
+                    <input type="email" placeholder="Masukan email anda" name="email_pengguna"
+                    id="email_pengguna" oninput="this.className = ''" value="{{Auth::user()->email}}">
+                </p>
                 <span class="text-danger">
                     <h6 class="error_email_pengguna"></h6>
                 </span>
             </div>
 
 
-            <div class="tab"> Alamat 
+            <div class="tab"> 
+                <strong>
+                    <h4>Alamat</h4>
+                </strong>
                 <h6>Alamat Penerima:</h6>
-                <p><input type="text" placeholder="Masukan alamat anda" name="alamat_pengguna"
-                        id="alamat_pengguna" oninput="this.className = ''"></p>
+                <p>
+                    <input type="text" placeholder="Masukan alamat anda" name="alamat_pengguna"
+                    id="alamat_pengguna" oninput="this.className = ''">
+                </p>
                 <span class="text-danger">
                     <h6 class="error_alamat_pengguna"></h6>
                 </span>
 
                 <h6>Provinsi:</h6>
-                <p><input type="text" placeholder="Masukan nama provinsi" name="provinsi"
-                        id="provinsi" oninput="this.className = ''"></p>
+                <p>
+                    <select name="provinsi" class="form-control prov" id="provto" onchange="getcity(this.value, 'to')" required>
+
+                    </select>
+                </p>
                 <span class="text-danger">
                     <h6 class="error_provinsi"></h6>
                 </span>
 
                 <h6>Kabupaten:</h6>
-                <p><input type="text" placeholder="Masukan nama kabupaten" name="kabupaten"
-                        id="kabupaten" oninput="this.className = ''"></p>
+                <p>
+                    <select name="kabupaten" class="form-control" id="cityto" required>
+
+                    </select>
+                </p>
                 <span class="text-danger">
                     <h6 class="error_kabupaten"></h6>
                 </span>
-                
+
             </div>
 
             <div class="tab">
                 Kurir
                 <h6>Pilih kurir:</h6>
-                <p><input type="text" placeholder="kurir" name="kurir"
-                        id="kurir" oninput="this.className = ''"></p>
+                <p>
+                    <select class="form-control" id="kurir" name="kurir" required>
+                        <option value="">--Select Here--</option>
+                        @foreach($courier as $cou)
+                        <option value="{{$cou->id}}">{{$cou->courier}}</option>
+                        @endforeach
+                    </select>
+                </p>
                 <span class="text-danger">
                     <h6 class="error_kabupaten"></h6>
                 </span>
+                <h6>Provinsi Pengirim:</h6>
+                <p>
+                    <select class="form-control prov" id="provfrom" onchange="getcity(this.value, 'from')" required>
+
+                    </select>
+                </p>
+                <span class="text-danger">
+                    <h6 class="error_provinsi"></h6>
+                </span>
+
+                <h6>Kabupaten Pengirim:</h6>
+                <p>
+                    <select class="form-control" id="cityfrom" required>
+
+                    </select>
+                </p>
+                <span class="text-danger">
+                    <h6 class="error_kabupaten"></h6>
+                </span>
+
+                <h6>Package:</h6>
+                <select type="text" name="pack" id="pack" onchange="setongkir(this.value)" class="form-control">
+
+                </select>
+
+                <center>
+                    <button class="btn btn-success" type="button" style="margin-top: 15px;" onclick="getongkir()">Lihat Package</button>
+                </center>
+
+                <h6>Ongkir:</h6>
+                <input type="text" id="ongkir" name="ongkir" required readonly>
 
             </div>
 
@@ -170,10 +241,10 @@
                   <div style="float:right;">
                        
                     <button type="button" class="btn btn-primary" id="prevBtn"
-                        onclick="nextPrev(-1)">Sebelumnya</button>
+                    onclick="nextPrev(-1)">Sebelumnya</button>
                        
                     <button type="button" class="btn btn-primary" id="nextBtn"
-                        onclick="nextPrev(1)">Selanjutnya</button>
+                    onclick="nextPrev(1)">Selanjutnya</button>
                      
                 </div>
             </div>
@@ -261,5 +332,71 @@
         x[tab].className += " active";
     }
 
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var ins = '<option value="">--Select Here--</option>'
+        $.ajax({
+            url: "/get/provinsi", 
+            success: function(result){
+                var hasil = JSON.parse(result);
+                for (var i = 0; i < hasil.length; i++) {
+                    ins += '<option value="'+hasil[i].province_id+'">'+hasil[i].province+'</option>'
+                }
+                $('.prov').html(ins);
+                console.log(hasil);
+            }
+        });
+    });
+
+    function getcity(param, destiny){
+        var ins = '<option value="">--Select Here--</option>'
+        $.ajax({
+            url: "/get/city/"+param, 
+            success: function(result){
+                var hasil = JSON.parse(result);
+                for (var i = 0; i < hasil.length; i++) {
+                    ins += '<option value="'+hasil[i].city_id+'">'+hasil[i].city_name+'</option>'
+                }
+                if (destiny == 'to') {
+                    $('#cityto').html(ins)
+                }else if (destiny == 'from'){
+                    $('#cityfrom').html(ins)
+                }
+                console.log(hasil);
+            }
+        });
+    }
+
+    function getongkir(){
+        var ins = '<option value="">--Select Here--</option>';
+        if ($('#provto').val() == "" || $('#cityto').val() == "" || $('#provfrom').val() == "" || $('#cityfrom').val() == "" || $('#kurir').val() == "") {
+            alert('lengkapi lamat terlebih dahulu');
+        }else{
+            $('#province').val($('#provto').find(':selected').text());
+            $('#regency').val($('#cityto').find(':selected').text());
+            $.ajax({
+                url: "/get/ongkir/"+$('#cityto').val()+'/'+$('#cityfrom').val()+'/'+$('#kurir').find(":selected").text()+'/'+$('#berat').val()*$('#jumlah_total').val(), 
+                success: function(result){
+                    var hasil = JSON.parse(result);
+                    for (var i = 0; i < hasil[0].costs.length; i++) {
+                        ins += '<option value="'+hasil[0].costs[i].cost[0].value+'">'+hasil[0].costs[i].service+'</option>'
+                    }
+                    $('#pack').html(ins);
+                    console.log(hasil);
+                }
+            });
+        }
+    }
+
+    function setongkir(param){
+        document.getElementById('ongkir').value = param;
+    }
+
+    function hitungberat(param){
+        var baru = $('#berat').val() * param;
+        $('#berat').val(baru);
+    }
 </script>
 @endsection

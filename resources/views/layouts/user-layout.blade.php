@@ -34,8 +34,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="propClone"><a href="/user">Home</a></li>
                             <li class="propClone"><a href="/user/show">Product</a></li>
-                            <li class="propClone"><a href="/user/detail/{id}">Checkout</a></li>
-                            <li class="propClone"><a href="contact.html">Contact</a></li>
+                            @if(Auth::check())
+                            <li class="propClone"><a href="/user/cart/{{Auth::user()->id}}">Cart</a></li>
+                            <li class="propClone"><a href="/user/transaksi/{{Auth::user()->id}}">Transaksi</a></li>
+                            @endif
                             <li class="propClone">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"

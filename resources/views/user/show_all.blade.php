@@ -29,6 +29,7 @@
                                     <a href="/user/transaksi-langsung/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-shopping-cart"></i>
                                         Purchase</a>
                                     <a href="/user/detail/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-link"></i> Details</a>
+                                    <a href="/add/cart/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                 </p>
                             </div>
                             @foreach ($product->RelasiProductImage as $gambar)

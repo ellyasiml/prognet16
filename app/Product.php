@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\ProductImage;
+use App\ProductReview;
 class Product extends Model
 {
     use SoftDeletes;
@@ -24,6 +25,10 @@ class Product extends Model
     //Relasi One to Many dengan tabel product Image
     public function RelasiProductImage (){
         return $this->hasMany(ProductImage::class);
+    }
+
+    function review(){
+        return $this->hasMany('App\ProductReview', 'product_id');
     }
     
 }

@@ -1,5 +1,10 @@
 @extends('layouts.user-layout')
 @section('konten')
+@if(Session::has('success'))
+<script type="text/javascript">
+    alert('{{Session::get("success")}}');
+</script>
+@endif
  <!-- STEPS =============================-->
  <div class="item content">
         <div class="container toparea">
@@ -9,7 +14,7 @@
                         <span class="numberstep"><i class="fa fa-book"></i></span>
                         <h3 class="numbertext">Jenis Buku yang Lengkap</h3>
                         <p>
-                            Menarwarkan bebagai jenis buku yang tentunya dapat dibilang cukup lengkap untuk sebuah toko
+                            Menawarkan bebagai jenis buku yang tentunya dapat dibilang cukup lengkap untuk sebuah toko
                             buku online.
                         </p>
                     </div>
@@ -67,9 +72,10 @@
                                     {{Str::limit($product->description, 80, $end='...')}}
                                 </p>
                                 <p>
-                                    <a href="/user/transaksi-langsung/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-shopping-cart"></i>
+                                    <a href="/user/transaksi-langsung/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-dollar"></i>
                                         Purchase</a>
                                     <a href="/user/detail/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-link"></i> Details</a>
+                                    <a href="/add/cart/{{$product->id}}" class="learn-more detailslearn"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                 </p>
                             </div>
                             @foreach ($product->RelasiProductImage as $gambar)

@@ -12,6 +12,8 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.3",
+        "irfa/raja-ongkir": "^1.33",
+        "kavist/rajaongkir": "1.1",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0"
     },
