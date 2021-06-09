@@ -10,6 +10,9 @@ use App\Product;
 use App\ProductReview;
 use App\Transaction;
 use App\TransactionDetail;
+use App\Admin;
+use App\User;
+use Illuminate\Support\Carbon;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use DB;
 
@@ -74,9 +77,18 @@ class UserController extends Controller
                 'rate' => $req->rate,
                 'content' => $req->content
             ]);
-        }
 
-        
+            //Notif Admin
+            $admin = Admin::find(1);
+            $data = [
+                'nama'=> Auth::user()->name,
+                'message'=>'mereview product!',
+                'id'=> $det->product_id,
+                'category' => 'review'
+            ];
+            $data_encode = json_encode($data);
+            $admin->createNotif($data_encode);
+        }
         return redirect('/user/transaksi/'.Auth::user()->id)->with('success', 'Rating berhasil diberikan');
     }
 
@@ -190,7 +202,7 @@ class UserController extends Controller
         }
 
         $idtrans = Transaction::create([
-            'timeout' => date('Y-m-d H:i:s', strtotime('+3 days')),
+            'timeout' => date('Y-m-d H:i:s', strtotime('+1 days')),
             'address' => $req->alamat,
             'regency' => $req->regency,
             'province' => $req->province,
@@ -200,7 +212,7 @@ class UserController extends Controller
             'user_id' => Auth::user()->id,
             'courier_id' => $req->kurir,
             'status' => 'unverified'
-        ])->id;
+        ]);
 
         foreach ($cart as $c) {
             $d = Discount::where('id_product', $c->product_id)->where('start', '<=', date('Y-m-d', strtotime(now())))->where('end', '>=', date('Y-m-d', strtotime(now())))->first();
@@ -210,7 +222,7 @@ class UserController extends Controller
                 $persen = $d->percentage;
             }
             TransactionDetail::create([
-                'transaction_id' => $idtrans,
+                'transaction_id' => $idtrans->id,
                 'product_id' => $c->product_id,
                 'qty' => $c->qty,
                 'discount' => $c->price*($persen/100),
@@ -219,6 +231,19 @@ class UserController extends Controller
 
             Cart::where('id', $c->id)->delete();
         }
+
+        $transaksi_id = $idtrans->id;
+
+        //Notif Admin
+        $admin = Admin::find(1);
+        $data = [
+            'nama'=> Auth::user()->name,
+            'message'=>'melakukan transaksi!',
+            'id'=> $transaksi_id,
+            'category' => 'transaction'
+        ];
+        $data_encode = json_encode($data);
+        $admin->createNotif($data_encode);
 
         return redirect('/user/transaksi/'.Auth::user()->id)->with('success', 'Checkout keranjang berhasil, liat transaksi anda sekarang');
     }
@@ -273,6 +298,9 @@ class UserController extends Controller
             'bukti' => 'required'
         ]);
 
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
         $file = $req->file('bukti');
 
         if ($file->getClientOriginalExtension() != 'jpg') {
@@ -288,14 +316,28 @@ class UserController extends Controller
                 'proof_of_payment' => $namafile
             ]);
 
+            //Notif Admin
+            $admin = Admin::find(1);
+            $data = [
+                'nama'=> $user->name,
+                'message'=>'mengupload bukti pembayaran!',
+                'id'=> $req->id,
+                'category' => 'transaction'
+            ];
+
+            $data_encode = json_encode($data);
+            $admin->createNotif($data_encode);
+
             return redirect('/user/transaksi/'.Auth::user()->id)->with('success', 'Berhasil mengunggah bukti pembayaran');
         }
+
     }
 
     function getdetail($id){
         $data = TransactionDetail::join('products','transaction_details.product_id', 'products.id')->where('transaction_id', $id)->select('transaction_details.*','products.product_name')->get();
         echo json_encode($data);
     }
+
 }
 
 

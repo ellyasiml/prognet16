@@ -9,6 +9,10 @@ use App\Product;
 use App\ProductImage;
 use App\ProductCategory;
 use App\ProductCategoryDetail;
+use App\Admin;
+use App\ProductReview;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ControllerProduct extends Controller
 {
@@ -241,24 +245,30 @@ class ControllerProduct extends Controller
         ]);
 
         $user = Auth::user();
-        $review = new Product_Review();
+        $review = new ProductReview();
         $review->product_id = $id;
         $review->user_id = $user->id;
         $review->rate = $request->rate;
         $review->content = $request->content;
+
         if($review->save()){
             $product = Product::find($id);
             $avg_rate = DB::select('SELECT AVG(rate) as avg_rate FROM product_reviews WHERE product_id=?', [$id]);
             $avg_rate = json_decode(json_encode($avg_rate), true);
             $product->product_rate = (int)round($avg_rate[0]["avg_rate"]);
             $product->save();
-
-            $admin = Admin::find(2);
-            $details = [
-                'order' => 'Review',
-                'body' => 'User has review our Product!',
-                'link' => url(route('product.edit',['id'=> $id])),
+        
+            //Notif Admin
+            $admin = Admin::find(1);
+            $data = [
+                'nama'=> $user->name,
+                'message'=>'mereview product!',
+                'id'=> $id,
+                'category' => 'review'
             ];
+            $data_encode = json_encode($data);
+            $admin->createNotif($data_encode);
+            dd($admin);
 
             return redirect()->back()->with("Success", "Successfully Comment");
         }

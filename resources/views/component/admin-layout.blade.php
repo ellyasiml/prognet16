@@ -150,6 +150,40 @@
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        @php $admin_unRead = \App\AdminNotifications::where('notifiable_id', 1)->where('read_at', NULL)->orderBy('created_at','desc')->count(); @endphp
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter">@php echo $admin_unRead @endphp</span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">
+                                Notification Center
+                            </h6>
+                            <!--<ul class="dropdown-menu notifications">-->
+								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 1)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
+								@forelse ($admin_notifikasi as $notifikasi)
+									@php $notif = json_decode($notifikasi->data); @endphp
+									<!--<li>-->
+										<a href="@if ($notif->category == 'transaction') {{ route('admin.notification', $notifikasi->id) }} @elseif ($notif->category == 'review') {{ route('admin.notification', $notifikasi->id) }} @endif" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}<br></a><!--</li>-->
+								@empty
+									<!--<li>--><a href="" class="notification-item">Tidak ada notifikasi</a><!--</li>-->
+								@endforelse
+							<!--</ul>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div>
+                                    <div class="small text-gray-500">December 12, 2019</div>
+                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                </div>
+                            </a>-->
+                        </div>
+                    </li>
+
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

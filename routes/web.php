@@ -86,6 +86,8 @@ Route::prefix('admin')->group(function (){
 
     Route::get('/laporan/perbulan', 'AdminController@laporanperbulan');
     Route::get('/laporan/pertahun', 'AdminController@laporanpertahun');
+
+    Route::get('admin/{id}', 'AdminController@adminNotif')->name('admin.notification');
    
     
     Route::middleware('auth:admin')->group(function(){

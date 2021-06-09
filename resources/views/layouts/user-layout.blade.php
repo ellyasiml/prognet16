@@ -37,6 +37,27 @@
                             @if(Auth::check())
                             <li class="propClone"><a href="/user/cart/{{Auth::user()->id}}">Cart</a></li>
                             <li class="propClone"><a href="/user/transaksi/{{Auth::user()->id}}">Transaksi</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Notifications
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @php $user_unRead = \App\UserNotifications::where('notifiable_id', Auth::user()->id)->where('read_at', NULL)->orderBy('created_at','desc')->count(); @endphp
+                                    @php $user_notifikasi = \App\UserNotifications::where('notifiable_id', Auth::user()->id)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
+                                    @forelse ($user_notifikasi as $notifikasi)
+                                         @php $notif = json_decode($notifikasi->data); @endphp
+                                            <a href="{{-- route('user.notification', $notifikasi->id) --}}" class="dropdown-item btnunNotif" data-num=""><small>[{{ $notif->nama }}] {{ $notif->message }}<br></small></a>
+                                    @empty
+                                            <a href="#" class="dropdown-item">
+                                            &nbsp;<small>Tidak ada notifikasi<br></small>
+                                            </a>
+                                    @endforelse
+                                  <!--<a class="dropdown-item" href="#">Action</a>
+                                  <a class="dropdown-item" href="#">Another action</a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">Something else here</a>-->
+                                </div>
+                              </li>
                             @endif
                             <li class="propClone">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"

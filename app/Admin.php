@@ -44,4 +44,19 @@ class Admin extends Authenticatable
     {
         $this->notify(new AdminResetPasswordNotification($token));
     }
+
+    public function createNotif($data)
+    {
+        $notif = new AdminNotifications();
+        $notif->type = 'App\Notifications\AdminNotification';
+        $notif->notifiable_type = 'App\Admin';
+        $notif->notifiable_id = $this->id;
+        $notif->data = $data;
+        $notif->save();
+    }
+
+    public function response()
+    {
+        return $this->hasMany('App\Response');
+    }
 }

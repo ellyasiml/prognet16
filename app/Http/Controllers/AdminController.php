@@ -7,8 +7,11 @@ use App\Transaction;
 use App\TransactionDetail;
 use App\ProductReview;
 use App\Response;
-use Auth;
-use DB;
+use Illuminate\Support\Carbon;
+use App\AdminNotifications;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\User;
 class AdminController extends Controller
 {
         /**
@@ -37,6 +40,9 @@ class AdminController extends Controller
     }
 
     function ubahstatus($param, $id){
+        $transaction = Transaction::find($id);
+        $user = User::find($transaction->user_id);
+
         if ($param == 'expired' || $param == 'canceled') {
             TransactionDetail::where('transaction_id', $id)->delete();
             Transaction::where('id', $id)->delete();
@@ -46,10 +52,31 @@ class AdminController extends Controller
                 Transaction::where('id', $id)->update([
                     'status' => 'verified'
                 ]);
+
+                //Notif User
+                $data = [
+                    'nama'=> $user->name,
+                    'message'=>'Pesanan terverifikasi!',
+                    'id'=> $id,
+                    'category' => 'approved'
+                ];
+                $data_encode = json_encode($data);
+                $user->createNotifUser($data_encode);
+
             }else if ($param == 'verified') {
                 Transaction::where('id', $id)->update([
                     'status' => 'delivered'
                 ]);
+
+                //Notif User
+                $data = [
+                    'nama'=> $user->name,
+                    'message'=>'Pesanan dalam perjalanan!',
+                    'id'=> $id,
+                    'category' => 'delivered'
+                ];
+                $data_encode = json_encode($data);
+                $user->createNotifUser($data_encode);
             }
             return redirect('/transaction/'.$param)->with('berhasil', "Berhasil ubah status transaksi");
         }
@@ -65,11 +92,25 @@ class AdminController extends Controller
             'content' => 'required'
         ]);
 
+        $review = ProductReview::find($req->id);
+        $user = User::find($review->user_id);
+
         Response::create([
             'review_id' => $req->id,
             'admin_id' => Auth::user()->id,
             'content' => $req->content
         ]);
+
+        //Notif User
+        $data = [
+            'nama'=> $user->name,
+            'message'=>'Review diresponse!',
+            'id'=> $review->id,
+            'category' => 'review'
+        ];
+        $data_encode = json_encode($data);
+        $user->createNotifUser($data_encode);
+        return redirect("/products");
 
         return redirect('/review')->with('berhasil', "Berhasil memberi tanggapan");
     }
@@ -110,5 +151,22 @@ class AdminController extends Controller
         $data['tahun'] = $_GET['tahun'];
         $data['tahun'] = $_GET['tahun'];
         return view('admin.print-pertahun', $data);
+    }
+
+    public function adminNotif($id) 
+    {
+        $notification = AdminNotifications::find($id);
+        $notif = json_decode($notification->data);
+        $date = Carbon::now('Asia/Makassar');
+        AdminNotifications::where('id', $id)
+                ->update([
+                    'read_at' => $date
+                ]);
+        
+        if ($notif->category == 'transaction') {
+            return redirect()->route('transactions.detail', $notif->id);
+        } elseif ($notif->category == 'review') {
+            return redirect('/review');
+        } 
     }
 }
