@@ -166,7 +166,7 @@
                                 Notification Center
                             </h6>
                             <!--<ul class="dropdown-menu notifications">-->
-								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 1)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
+                                @php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 1)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
 								@forelse ($admin_notifikasi as $notifikasi)
 									@php $notif = json_decode($notifikasi->data); @endphp
 									<!--<li>-->

@@ -34,11 +34,11 @@ class HomeController extends Controller
         $notif = json_decode($notification->data);
         $date = Carbon::now('Asia/Makassar');
         UserNotifications::where('id', $id)
-                ->update([
-                    'read_at' => $date
-                ]);
+            ->update([
+                'read_at' => $date
+            ]);
         
-        if ($notif->category == 'transaction') {
+        /*if ($notif->category == 'transaction') {
             return redirect()->route('order.all');
         } elseif ($notif->category == 'approved') {
             return redirect()->route('order.verified');
@@ -52,6 +52,6 @@ class HomeController extends Controller
             return redirect()->route('order.success');
         } elseif ($notif->category == 'review') {
             return redirect()->route('detail_product', $notif->id);
-        }
+        }*/
     }
 }

@@ -12,6 +12,7 @@ use App\Transaction;
 use App\TransactionDetail;
 use App\Admin;
 use App\User;
+use App\UserNotifications;
 use Illuminate\Support\Carbon;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use DB;
@@ -336,6 +337,33 @@ class UserController extends Controller
     function getdetail($id){
         $data = TransactionDetail::join('products','transaction_details.product_id', 'products.id')->where('transaction_id', $id)->select('transaction_details.*','products.product_name')->get();
         echo json_encode($data);
+    }
+
+    public function userNotif($id) 
+    {
+        $notification = UserNotifications::find($id);
+        $notif = json_decode($notification->data);
+        $date = Carbon::now('Asia/Makassar');
+        UserNotifications::where('id', $id)
+            ->update([
+                'read_at' => $date
+            ]);
+        
+        /*if ($notif->category == 'transaction') {
+            return redirect()->route('order.all');
+        } elseif ($notif->category == 'approved') {
+            return redirect()->route('order.verified');
+        } elseif ($notif->category == 'delivered') {
+            return redirect()->route('order.delivered');
+        } elseif ($notif->category == 'canceled') {
+            return redirect()->route('order.canceled');
+        } elseif ($notif->category == 'expired') {
+            return redirect()->route('order.expired');
+        } elseif ($notif->category == 'success') {
+            return redirect()->route('order.success');
+        } elseif ($notif->category == 'review') {
+            return redirect()->route('detail_product', $notif->id);
+        }*/
     }
 
 }

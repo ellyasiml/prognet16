@@ -42,11 +42,10 @@
                                   Notifications
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @php $user_unRead = \App\UserNotifications::where('notifiable_id', Auth::user()->id)->where('read_at', NULL)->orderBy('created_at','desc')->count(); @endphp
                                     @php $user_notifikasi = \App\UserNotifications::where('notifiable_id', Auth::user()->id)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
                                     @forelse ($user_notifikasi as $notifikasi)
                                          @php $notif = json_decode($notifikasi->data); @endphp
-                                            <a href="{{-- route('user.notification', $notifikasi->id) --}}" class="dropdown-item btnunNotif" data-num=""><small>[{{ $notif->nama }}] {{ $notif->message }}<br></small></a>
+                                            <a href="/user/transaksi/{id}" class="dropdown-item btnunNotif" data-num=""><small>[{{ $notif->nama }}] {{ $notif->message }}<br></small></a>
                                     @empty
                                             <a href="#" class="dropdown-item">
                                             &nbsp;<small>Tidak ada notifikasi<br></small>
